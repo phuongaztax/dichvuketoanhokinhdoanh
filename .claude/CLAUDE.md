@@ -33,6 +33,7 @@ Buoi1/
 │   └── .nojekyll        # Để GitHub Pages phục vụ file tĩnh nguyên bản
 ├── backup/              # Bản cũ, chỉ để tham khảo, KHÔNG sửa, KHÔNG deploy
 ├── README.md
+├── vercel.json          # Cấu hình Vercel: xuất bản thư mục docs/, không build
 └── .gitignore
 ```
 
@@ -80,4 +81,6 @@ Buoi1/
 3. Xem thử: mở `docs/index.html` bằng trình duyệt, hoặc chụp màn hình bằng Edge headless:
    `msedge --headless=new --window-size=1366,3000 --screenshot=out.png file:///d:/VideWeb02/Buoi1/docs/index.html`
    (Edge headless có độ rộng tối thiểu ~500px, kiểm tra mobile thật bằng DevTools.)
-4. Deploy: đẩy lên GitHub → Settings → Pages → nhánh `main`, thư mục `/docs`.
+4. Deploy: `git push` lên nhánh `main` của https://github.com/phuongaztax/dichvuketoanhokinhdoanh
+   - Vercel (project `dichvuketoanhokinhdoanh`, https://dichvuketoanhokinhdoanh.vercel.app) tự deploy theo `vercel.json`.
+   - GitHub Pages (nếu bật): Settings → Pages → nhánh `main`, thư mục `/docs`.
