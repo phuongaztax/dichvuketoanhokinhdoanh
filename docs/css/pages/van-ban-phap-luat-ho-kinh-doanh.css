@@ -1,0 +1,95 @@
+/* =========================================================
+   Trang: Văn bản pháp luật hộ kinh doanh
+   Chỉ chứa CSS riêng của trang. Phần dùng chung nằm ở css/style.css.
+   ========================================================= */
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Thông tin nổi bật */
+.pg-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.pg-stat {
+  display: flex; flex-direction: column; gap: 4px; padding: 22px 20px;
+  background: rgba(255, 255, 255, .85); backdrop-filter: blur(10px);
+  border: 1px solid var(--line); border-radius: var(--radius);
+}
+.pg-stat__num { font-size: 1.9rem; font-weight: 800; color: var(--green-900); font-variant-numeric: tabular-nums; }
+.pg-stat span { color: var(--muted); font-size: .92rem; }
+
+/* Thanh lọc + tìm kiếm */
+.pg-toolbar { display: grid; gap: 14px; margin-bottom: 14px; }
+.pg-search { position: relative; display: block; max-width: 620px; margin: 0 auto; width: 100%; }
+.pg-search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; }
+.pg-search input {
+  width: 100%; padding: 13px 16px 13px 44px; border: 1px solid #C9D5D0; border-radius: 99px; background: var(--white);
+  transition: border-color .15s, box-shadow .15s;
+}
+.pg-search input:focus { outline: none; border-color: var(--green-600); box-shadow: 0 0 0 3px var(--green-100); }
+.pg-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.pg-chip {
+  padding: 8px 14px; border-radius: 99px; border: 1px solid var(--line); background: var(--white);
+  font-weight: 600; font-size: .9rem; cursor: pointer; transition: background .2s, color .2s, border-color .2s;
+}
+.pg-chip:hover { border-color: var(--green-600); }
+.pg-chip[aria-pressed="true"] { background: var(--green-700); border-color: var(--green-700); color: var(--white); }
+.pg-chip small { opacity: .7; font-weight: 500; margin-left: 4px; }
+.pg-count { text-align: center; color: var(--muted); font-size: .9rem; margin-bottom: 18px; }
+
+/* Danh sách văn bản */
+.pg-docs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; align-items: start; }
+.pg-doc {
+  background: rgba(255, 255, 255, .92); border: 1px solid var(--line); border-radius: var(--radius);
+  border-left: 4px solid var(--c, var(--green-600)); overflow: hidden; transition: box-shadow .2s, transform .2s;
+}
+.pg-doc:hover { box-shadow: var(--shadow); }
+.pg-doc summary { list-style: none; cursor: pointer; padding: 18px 52px 16px 20px; position: relative; display: grid; gap: 6px; }
+.pg-doc summary::-webkit-details-marker { display: none; }
+.pg-doc summary::after {
+  content: "+"; position: absolute; right: 16px; top: 18px; width: 26px; height: 26px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--green-100); color: var(--green-700); font-weight: 700;
+}
+.pg-doc[open] summary::after { content: "−"; }
+.pg-doc__meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pg-tag { font-size: .74rem; font-weight: 700; padding: 2px 9px; border-radius: 99px; background: var(--bg-alt); color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.pg-tag--cat { background: color-mix(in srgb, var(--c, var(--green-600)) 14%, white); color: var(--c, var(--green-700)); }
+.pg-doc__no { font-weight: 800; font-size: 1.05rem; color: var(--green-900); }
+.pg-doc__name { font-size: .95rem; color: var(--ink); }
+.pg-doc__dates { font-size: .84rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pg-doc__dates b { color: var(--green-700); font-weight: 600; }
+.pg-doc__body { padding: 0 20px 18px; border-top: 1px dashed var(--line); margin-top: 2px; }
+.pg-doc__body h4 { font-size: .85rem; text-transform: uppercase; letter-spacing: .06em; color: var(--green-700); margin: 14px 0 8px; }
+.pg-doc__body ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: .93rem; }
+.pg-doc__body .pg-note { margin-top: 12px; font-size: .84rem; color: var(--muted); }
+.pg-empty { grid-column: 1 / -1; text-align: center; padding: 32px; color: var(--muted); background: var(--white); border-radius: var(--radius); border: 1px dashed var(--line); }
+mark { background: var(--amber-100); color: inherit; padding: 0 2px; border-radius: 3px; }
+
+.pg-disclaimer { margin-top: 24px; font-size: .84rem; color: var(--muted); padding: 12px 14px; border-left: 3px solid var(--amber); background: var(--amber-100); border-radius: 0 8px 8px 0; }
+
+/* Bảng văn bản cũ */
+.pg-old td:first-child { white-space: nowrap; }
+.pg-old td:last-child { color: var(--green-700); font-weight: 500; }
+
+/* Dải CTA */
+.pg-cta { display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.pg-cta h2 + p { margin-top: 12px; }
+.pg-cta__actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
+.pg-cta__phone { border-color: rgba(255,255,255,.5); color: var(--white); }
+.pg-cta__phone:hover { background: rgba(255,255,255,.1); }
+
+/* Responsive */
+@media (max-width: 1080px) {
+  .pg-stats { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 960px) {
+  .pg-docs { grid-template-columns: 1fr; }
+  .pg-cta { grid-template-columns: 1fr; }
+  .pg-cta__actions { justify-content: flex-start; }
+}
+@media (max-width: 640px) {
+  .pg-stats { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .pg-stat { padding: 16px; }
+  .pg-stat__num { font-size: 1.5rem; }
+  .pg-chips { justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+  .pg-chip { flex: none; }
+  .pg-old td:first-child { white-space: normal; }
+  .pg-cta__actions .btn { width: 100%; }
+}

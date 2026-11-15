@@ -1,0 +1,12 @@
+# Hệ điều hành / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+
+# Cài đặt Claude Code riêng của từng máy (giữ lại CLAUDE.md)
+.claude/settings.local.json
+
+# File tạm
+*.tmp
+*.log

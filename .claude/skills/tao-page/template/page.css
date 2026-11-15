@@ -1,0 +1,53 @@
+/* =========================================================
+   Trang: {{TITLE}}
+   Chỉ chứa CSS riêng của trang. Phần dùng chung nằm ở css/style.css.
+   Dùng biến màu var(--...) và tiền tố .pg- để tránh đụng CSS chung.
+   ========================================================= */
+
+/* Thông tin nổi bật */
+.pg-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.pg-stat {
+  display: flex; flex-direction: column; gap: 4px; padding: 22px 20px;
+  background: rgba(255, 255, 255, .85); backdrop-filter: blur(10px);
+  border: 1px solid var(--line); border-radius: var(--radius);
+}
+.pg-stat__num { font-size: 1.9rem; font-weight: 800; color: var(--green-900); font-variant-numeric: tabular-nums; }
+.pg-stat span { color: var(--muted); font-size: .92rem; }
+
+/* Tabs */
+.pg-tabs__list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
+.pg-tabs__list [role="tab"] {
+  padding: 10px 18px; border-radius: 99px; border: 1px solid var(--line); background: var(--white);
+  font-weight: 600; cursor: pointer; transition: background .2s, color .2s, border-color .2s;
+}
+.pg-tabs__list [role="tab"]:hover { border-color: var(--green-600); }
+.pg-tabs__list [role="tab"][aria-selected="true"] { background: var(--green-700); border-color: var(--green-700); color: var(--white); }
+.pg-tabs__panel { padding: 28px; animation: pg-fade .35s ease; }
+@keyframes pg-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* Dải CTA */
+.pg-cta { display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.pg-cta h2 + p { margin-top: 12px; }
+.pg-cta__actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
+.pg-cta__phone { border-color: rgba(255,255,255,.5); color: var(--white); }
+.pg-cta__phone:hover { background: rgba(255,255,255,.1); }
+
+/* Responsive */
+@media (max-width: 1080px) {
+  .pg-stats { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 960px) {
+  .pg-cta { grid-template-columns: 1fr; }
+  .pg-cta__actions { justify-content: flex-start; }
+}
+@media (max-width: 640px) {
+  .pg-stats { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .pg-stat { padding: 16px; }
+  .pg-stat__num { font-size: 1.5rem; }
+  .pg-tabs__panel { padding: 20px; }
+  .pg-cta__actions .btn { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pg-tabs__panel { animation: none; }
+}

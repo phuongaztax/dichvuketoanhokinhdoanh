@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Kế toán Hộ Kinh Doanh AZ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Dịch vụ kế toán, kê khai thuế và phần mềm MISA cho hộ kinh doanh theo chính sách 2026. dichvuketoanhokinhdoanh.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lora:wght@600;700&display=swap">
+<style>
+/* Layout: sổ cái xanh — thanh điều hướng cố định, các "trang sổ" xếp dọc, bảng số căn cột */
+:root{
+  --paper:#F4F7FB; --sheet:#FFFFFF; --ink:#102A43; --muted:#55687D; --line:#D9E2EC;
+  --blue:#1D5FD1; --blue-deep:#0B3C8C; --blue-soft:#E4EEFC; --sky:#0E8BC9;
+  --warn:#B7791F; --warn-soft:#FBF1DF; --alert:#C2412D; --alert-soft:#FBE7E3;
+  --f-display:"Lora",Georgia,"Times New Roman",serif;
+  --f-body:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0B1626; --sheet:#122238; --ink:#E5EDF7; --muted:#9DB0C6; --line:#24384F;
+  --blue:#6EA4FF; --blue-deep:#A9C8FF; --blue-soft:#17305A; --sky:#4FC0F0;
+  --warn:#E5B45C; --warn-soft:#3A2E17; --alert:#F08A74; --alert-soft:#3D211C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0B1626; --sheet:#122238; --ink:#E5EDF7; --muted:#9DB0C6; --line:#24384F;
+  --blue:#6EA4FF; --blue-deep:#A9C8FF; --blue-soft:#17305A; --sky:#4FC0F0;
+  --warn:#E5B45C; --warn-soft:#3A2E17; --alert:#F08A74; --alert-soft:#3D211C; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sheet)}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);line-height:1.25;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,4.6vw,3.1rem)} h2{font-size:clamp(1.5rem,3vw,2rem)} h3{font-size:1.15rem}
+p{margin:0} a{color:var(--blue)}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:600}
+.num{font-variant-numeric:tabular-nums}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--sheet);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:16px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);min-width:0}
+.seal{width:38px;height:38px;border-radius:50%;border:2px solid var(--blue);color:var(--blue);display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:.95rem;flex:none;transform:rotate(-8deg)}
+.brand b{display:block;font-size:.98rem;line-height:1.2}
+.brand small{display:block;color:var(--muted);font-size:.74rem}
+nav.main{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+nav.main a{padding:7px 10px;border-radius:8px;text-decoration:none;color:var(--ink);font-size:.9rem;font-weight:500;white-space:nowrap}
+nav.main a:hover{background:var(--blue-soft)}
+nav.main a[aria-current="page"]{background:var(--blue);color:var(--sheet)}
+.menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+@media (max-width:1040px){
+  .menu-btn{display:block}
+  nav.main{display:none;position:absolute;left:0;right:0;top:100%;background:var(--sheet);border-bottom:1px solid var(--line);flex-direction:column;padding:8px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px))}
+  nav.main.open{display:flex}
+}
+
+main{padding-block:28px 72px}
+section.view{display:grid;gap:28px}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:22px;min-width:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:8px;border:1px solid var(--blue);background:var(--blue);color:var(--sheet);font-weight:600;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--blue)}
+.btn.sm{padding:6px 12px;font-size:.9rem}
+.btn:hover{filter:brightness(1.08)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:980px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+@media (max-width:560px){.grid4{grid-template-columns:1fr}}
+.muted{color:var(--muted)}
+.note{font-size:.86rem;color:var(--muted)}
+.sec-head{display:grid;gap:6px}
+.sec-head p{max-width:68ch;color:var(--muted)}
+
+.hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;align-items:center;padding-block:12px}
+@media (max-width:820px){.hero{grid-template-columns:1fr}}
+.hero p.lead{font-size:1.1rem;color:var(--muted);margin-top:14px;max-width:58ch}
+.ledger{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.ledger .lh{padding:12px 16px;border-bottom:1px solid var(--line);font-weight:600;display:flex;justify-content:space-between;gap:10px;background:var(--blue-soft)}
+.ledger .ln{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:11px 16px;border-bottom:1px dashed var(--line)}
+.ledger .ln:last-child{border-bottom:0}
+.tag{display:inline-block;font-size:.74rem;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--blue-soft);color:var(--blue);white-space:nowrap}
+.tag.sky{background:color-mix(in srgb,var(--sky) 15%,transparent);color:var(--sky)}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+.tag.alert{background:var(--alert-soft);color:var(--alert)}
+.tag.plain{background:var(--paper);color:var(--muted);border:1px solid var(--line)}
+
+.tiers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--sheet)}
+.tiers>div{padding:20px;border-right:1px solid var(--line);display:grid;gap:8px;align-content:start}
+.tiers>div:last-child{border-right:0}
+.tiers .range{font-family:var(--f-display);font-size:1.3rem;font-weight:700}
+.tiers ul{margin:0;padding-left:18px;color:var(--muted);font-size:.92rem;display:grid;gap:3px}
+@media (max-width:980px){.tiers{grid-template-columns:repeat(2,minmax(0,1fr))}.tiers>div:nth-child(2){border-right:0}.tiers>div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+@media (max-width:560px){.tiers{grid-template-columns:1fr}.tiers>div{border-right:0;border-bottom:1px solid var(--line)}.tiers>div:last-child{border-bottom:0}}
+
+.plan{display:grid;gap:12px;align-content:start;grid-template-rows:auto auto auto 1fr auto}
+.plan .price{font-family:var(--f-display);font-size:1.5rem;font-weight:700}
+.plan .price small{font-family:var(--f-body);font-size:.85rem;color:var(--muted);font-weight:400}
+.plan ul{margin:0;padding-left:18px;display:grid;gap:4px;align-content:start;font-size:.94rem}
+.plan.feature{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue)}
+.sw{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start}
+.sw .ico{width:44px;height:44px;border-radius:10px;background:var(--blue-soft);color:var(--blue);display:grid;place-items:center;font-weight:700;font-size:.8rem;letter-spacing:.02em}
+.sw ul{margin:6px 0 0;padding-left:18px;color:var(--muted);font-size:.92rem}
+.combo td:first-child{white-space:nowrap}
+
+.field{display:grid;gap:6px}
+.field label{font-size:.88rem;font-weight:600}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper)}
+.field textarea{min-height:90px;resize:vertical}
+.seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+.seg button{flex:1;padding:9px 10px;background:var(--paper);border:0;cursor:pointer;font-size:.9rem;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--blue);color:var(--sheet);font-weight:600}
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:20px}
+@media (max-width:820px){.calc{grid-template-columns:1fr}}
+.result .big{font-family:var(--f-display);font-size:2.1rem;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:.94rem}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+td.r,th.r{text-align:right}
+.tablebox{overflow-x:auto}
+.cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cmp>div{border:1px solid var(--line);border-radius:8px;padding:12px}
+.cmp>div.best{border-color:var(--blue);background:var(--blue-soft)}
+
+.tl .it{display:grid;grid-template-columns:130px minmax(0,1fr) auto;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);align-items:start}
+.tl .it:last-child{border-bottom:0}
+.tl .d{font-weight:700} .tl .d small{display:block;font-weight:400;color:var(--muted)}
+.tl .mo{padding:14px 0 4px;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line)}
+@media (max-width:600px){.tl .it{grid-template-columns:1fr;gap:6px}}
+
+.guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.guide-grid{grid-template-columns:1fr}}
+a.gcard{display:grid;gap:6px;padding:16px;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet);text-decoration:none;color:var(--ink);align-content:start}
+a.gcard:hover{border-color:var(--blue)}
+a.gcard .no{font-family:var(--f-display);color:var(--blue);font-weight:700}
+a.gcard b{font-size:1.02rem}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips button{border:1px solid var(--line);background:var(--sheet);border-radius:99px;padding:5px 12px;cursor:pointer;font-size:.88rem}
+.chips button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--sheet)}
+.article{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
+@media (max-width:900px){.article{grid-template-columns:1fr}}
+.article .body{display:grid;gap:22px;max-width:72ch}
+.article .body h3{font-size:1.2rem}
+.article .body ul{margin:8px 0 0;padding-left:20px;display:grid;gap:6px}
+.crumb{font-size:.9rem}
+.aside{display:grid;gap:14px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px)}
+
+.check{display:grid;gap:10px}
+.check label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.check input{margin-top:5px;accent-color:var(--blue)}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:820px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.steps{grid-template-columns:1fr}}
+.steps .n{font-family:var(--f-display);font-size:1.6rem;color:var(--blue);font-weight:700}
+.contact-box{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 14px;border:1px dashed var(--blue);border-radius:8px;background:var(--blue-soft)}
+.phone{font-size:1.25rem;font-weight:700;user-select:all}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:8px;font-size:.92rem;z-index:20}
+.status-sel{padding:4px 8px;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+footer{border-top:1px solid var(--line);background:var(--blue-deep);color:#DCE8FA;padding-block:28px;font-size:.9rem}
+:root:not([data-theme="light"]) footer{color:var(--paper)}
+footer .wrap{display:grid;gap:8px}
+.fab{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:8}
+@media (prefers-reduced-motion:no-preference){.view{animation:in .25s ease-out}@keyframes in{from{transform:translateY(6px)}to{transform:none}}}
+</style>
+</head>
+<body>
+
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#trang-chu"><span class="seal">AZ</span><span><b>Kế toán Hộ Kinh Doanh AZ</b><small>dichvuketoanhokinhdoanh.com</small></span></a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false">Menu</button>
+    <nav class="main" id="nav">
+      <a href="#trang-chu">Trang chủ</a>
+      <a href="#bang-gia">Bảng giá</a>
+      <a href="#dang-ky-kinh-doanh">Đăng ký kinh doanh</a>
+      <a href="#tinh-thue">Tính thuế</a>
+      <a href="#ty-le">Tỷ lệ ngành</a>
+      <a href="#lich-nop-bao-cao">Lịch nộp báo cáo thuế</a>
+      <a href="#huong-dan">Hướng dẫn</a>
+      <a href="#lien-he">Đăng ký tư vấn</a>
+      <a href="#quan-tri" id="adminLink" hidden>Quản trị</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- TRANG CHỦ -->
+<section class="view" id="v-trang-chu">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Đã bỏ thuế khoán từ 01/01/2026</p>
+      <h1>Hộ kinh doanh tự kê khai thuế. Sổ sách và phần mềm để AZ lo.</h1>
+      <p class="lead">Dịch vụ kế toán nhanh AZ nhận ghi sổ, kê khai và nộp thuế GTGT, TNCN cho hộ kinh doanh, đồng thời tư vấn, cài đặt phần mềm MISA: bán hàng, hóa đơn điện tử máy tính tiền, chữ ký số, kế toán hộ kinh doanh.</p>
+      <div class="row" style="margin-top:22px">
+        <a class="btn" href="#tinh-thue">Tính thuế của hộ bạn</a>
+        <a class="btn ghost" href="#dang-ky-kinh-doanh">Đăng ký kinh doanh</a>
+        <a class="btn ghost" href="#bang-gia">Xem bảng giá</a>
+      </div>
+      <div class="contact-box" style="margin-top:22px">
+        <span class="muted">Gọi hoặc Zalo:</span>
+        <span class="phone num">0901 455 988</span>
+        <button class="btn ghost sm" data-copy="0901455988">Chép số</button>
+      </div>
+    </div>
+    <div class="ledger" aria-label="Thay đổi chính sách 2026">
+      <div class="lh"><span>Sổ thay đổi 2026</span><span class="muted num">NĐ 68 · NĐ 141</span></div>
+      <div class="ln"><span>Bỏ thuế khoán, hộ tự khai theo doanh thu thực tế</span><span class="tag">01/01/2026</span></div>
+      <div class="ln"><span>Doanh thu năm đến 1 tỷ đồng: không nộp GTGT, TNCN</span><span class="tag">Ngưỡng mới</span></div>
+      <div class="ln"><span>Trên 1 tỷ: bắt buộc hóa đơn điện tử máy tính tiền</span><span class="tag alert">30 ngày</span></div>
+      <div class="ln"><span>Trên 3 tỷ: TNCN tính trên thu nhập, phải có sổ và chứng từ chi phí</span><span class="tag warn">Sổ kế toán</span></div>
+      <div class="ln"><span>Trên 50 tỷ: khai thuế theo tháng, TNCN 20%</span><span class="tag sky">Nhóm 4</span></div>
+      <div class="ln"><span>Bãi bỏ lệ phí môn bài</span><span class="tag">01/01/2026</span></div>
+    </div>
+  </div>
+
+  <div class="sec-head"><p class="eyebrow">Hộ của bạn thuộc nhóm nào</p><h2>Bốn nhóm hộ kinh doanh theo doanh thu năm</h2></div>
+  <div class="tiers" id="tiers"></div>
+
+  <div class="sec-head"><p class="eyebrow">Làm việc với AZ</p><h2>Bốn bước, không cần đến văn phòng</h2></div>
+  <div class="steps">
+    <div class="card"><div class="n">1</div><h3>Gửi thông tin</h3><p class="muted">Ngành nghề, doanh thu dự kiến, kênh bán qua Zalo.</p></div>
+    <div class="card"><div class="n">2</div><h3>Xếp nhóm thuế</h3><p class="muted">Chọn phương pháp tính có lợi, chọn phần mềm phù hợp.</p></div>
+    <div class="card"><div class="n">3</div><h3>Cài phần mềm</h3><p class="muted">Đăng ký hóa đơn điện tử, chữ ký số, phần mềm bán hàng MISA.</p></div>
+    <div class="card"><div class="n">4</div><h3>Ghi sổ, kê khai</h3><p class="muted">Lập sổ hằng kỳ, nộp tờ khai đúng hạn, báo số thuế trước ngày nộp.</p></div>
+  </div>
+</section>
+
+<!-- BẢNG GIÁ -->
+<section class="view" id="v-bang-gia" hidden>
+  <div class="sec-head"><p class="eyebrow">Bảng giá</p><h2>Dịch vụ kế toán và phần mềm MISA cho hộ kinh doanh</h2>
+  <p>Giá tham khảo. Báo giá chính xác sau khi AZ xem ngành nghề, số lượng hóa đơn chứng từ và nhu cầu phần mềm của hộ.</p></div>
+  <div class="seg" id="priceTabs" style="max-width:620px">
+    <button type="button" data-t="kt" aria-pressed="true">Dịch vụ kế toán</button>
+    <button type="button" data-t="pm" aria-pressed="false">Phần mềm MISA</button>
+    <button type="button" data-t="cb" aria-pressed="false">Gói kết hợp</button>
+    <button type="button" data-t="le" aria-pressed="false">Dịch vụ lẻ</button>
+  </div>
+
+  <div id="pt-kt" class="grid4"></div>
+
+  <div id="pt-pm" hidden style="display:grid;gap:16px">
+    <div class="grid2" id="swList"></div>
+    <p class="note">MISA eShop, MISA meInvoice, MISA eSign, MISA AMIS là sản phẩm của Công ty Cổ phần MISA. Giá phần mềm theo bảng giá của MISA tại thời điểm đăng ký; AZ báo giá cụ thể theo gói và hỗ trợ đăng ký, cài đặt, hướng dẫn sử dụng.</p>
+  </div>
+
+  <div id="pt-cb" hidden class="card tablebox" style="padding:0">
+    <table class="combo"><thead><tr><th>Nhóm hộ</th><th>Dịch vụ kế toán</th><th>Phần mềm đề xuất</th><th class="r">Liên hệ</th></tr></thead>
+    <tbody id="comboBody"></tbody></table>
+  </div>
+
+  <div id="pt-le" hidden class="card tablebox">
+    <table><thead><tr><th>Dịch vụ</th><th class="r">Phí tham khảo</th></tr></thead>
+      <tbody class="num">
+        <tr><td>Đăng ký hộ kinh doanh mới (trọn gói) · <a href="#dang-ky-kinh-doanh">chi tiết</a></td><td class="r">1.000.000đ</td></tr>
+        <tr><td>Thay đổi nội dung đăng ký hộ kinh doanh</td><td class="r">700.000đ</td></tr>
+        <tr><td>Tạm ngừng, tiếp tục kinh doanh</td><td class="r">500.000đ</td></tr>
+        <tr><td>Chấm dứt hộ kinh doanh, đóng mã số thuế</td><td class="r">Từ 1.000.000đ</td></tr>
+        <tr><td>Đăng ký thuế cá nhân kinh doanh</td><td class="r">300.000đ</td></tr>
+        <tr><td>Xin giấy phép con (ATTP, PCCC, an ninh trật tự…)</td><td class="r">Từ 2.000.000đ</td></tr>
+        <tr><td>Đăng ký mã số thuế, tài khoản thuế điện tử</td><td class="r">300.000đ</td></tr>
+        <tr><td>Đăng ký, cài đặt hóa đơn điện tử máy tính tiền</td><td class="r">500.000đ</td></tr>
+        <tr><td>Cài đặt, hướng dẫn phần mềm bán hàng</td><td class="r">500.000đ</td></tr>
+        <tr><td>Kê khai thuế cho thuê nhà, tài sản</td><td class="r">500.000đ / lần</td></tr>
+        <tr><td>Làm lại sổ sách các kỳ trước</td><td class="r">Theo hồ sơ</td></tr>
+        <tr><td>Chuyển đổi hộ kinh doanh lên doanh nghiệp</td><td class="r">Theo hồ sơ</td></tr>
+      </tbody></table>
+  </div>
+
+  <div class="card">
+    <h3>Hồ sơ cần chuẩn bị</h3>
+    <div class="grid2" style="margin-top:12px">
+      <div class="check">
+        <label><input type="checkbox" id="d1">Giấy chứng nhận đăng ký hộ kinh doanh</label>
+        <label><input type="checkbox" id="d2">CCCD của chủ hộ</label>
+        <label><input type="checkbox" id="d3">Tài khoản ngân hàng nhận tiền bán hàng</label>
+        <label><input type="checkbox" id="d4">Tài khoản thuế điện tử (eTax)</label>
+      </div>
+      <div class="check">
+        <label><input type="checkbox" id="d5">Hóa đơn mua vào, chứng từ chi phí trong kỳ</label>
+        <label><input type="checkbox" id="d6">Báo cáo doanh thu từ sàn TMĐT (nếu bán online)</label>
+        <label><input type="checkbox" id="d7">Hợp đồng thuê mặt bằng</label>
+        <label><input type="checkbox" id="d8">Chữ ký số (nếu đã có)</label>
+      </div>
+    </div>
+    <p class="note" style="margin-top:12px" id="docsCount">Đã có 0/8 giấy tờ.</p>
+  </div>
+</section>
+
+<!-- ĐĂNG KÝ KINH DOANH -->
+<section class="view" id="v-dang-ky-kinh-doanh" hidden>
+  <div class="sec-head"><p class="eyebrow">Đăng ký kinh doanh, giấy phép</p><h2>Thủ tục cho hộ kinh doanh và cá nhân kinh doanh</h2>
+  <p>AZ soạn hồ sơ, nộp tại cơ quan đăng ký kinh doanh cấp xã hoặc nộp online trên Cổng dịch vụ công, nhận kết quả và đăng ký thuế đi kèm. Chủ hộ không phải tự đi lại.</p></div>
+
+  <div class="card" style="display:grid;gap:14px">
+    <h3>Bạn cần làm thủ tục gì?</h3>
+    <div class="chips" id="regPick"></div>
+    <div id="regDetail" class="grid2" style="gap:20px"></div>
+  </div>
+
+  <div class="grid3" id="regCards"></div>
+
+  <div class="sec-head"><p class="eyebrow">Hộ kinh doanh hay cá nhân kinh doanh</p><h2>Phân biệt để đăng ký đúng</h2></div>
+  <div class="card tablebox" style="padding:0">
+    <table><thead><tr><th></th><th>Hộ kinh doanh</th><th>Cá nhân kinh doanh</th></tr></thead>
+    <tbody>
+      <tr><td><b>Đăng ký</b></td><td>Giấy chứng nhận đăng ký hộ kinh doanh tại cơ quan đăng ký kinh doanh cấp xã</td><td>Không cấp giấy đăng ký hộ; đăng ký thuế, mã số thuế cá nhân với cơ quan thuế</td></tr>
+      <tr><td><b>Thường gặp</b></td><td>Cửa hàng, quán ăn, cơ sở dịch vụ, sản xuất có địa điểm cố định</td><td>Cho thuê nhà, tài sản; bán hàng online nhỏ lẻ; buôn chuyến; hoạt động không thường xuyên</td></tr>
+      <tr><td><b>Thuế</b></td><td colspan="2">Cùng ngưỡng 1 tỷ đồng/năm và cùng tỷ lệ % theo ngành. Doanh thu từ nhiều nơi, nhiều kênh được cộng gộp.</td></tr>
+      <tr><td><b>Hóa đơn</b></td><td colspan="2">Doanh thu năm trên 1 tỷ: dùng hóa đơn điện tử. Cá nhân cho thuê tài sản có thể đề nghị cơ quan thuế cấp hóa đơn lẻ.</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="sec-head"><p class="eyebrow">Quy trình</p><h2>AZ làm thủ tục thay bạn</h2></div>
+  <div class="steps">
+    <div class="card"><div class="n">1</div><h3>Gửi giấy tờ</h3><p class="muted">Ảnh CCCD, thông tin địa điểm, ngành nghề qua Zalo.</p></div>
+    <div class="card"><div class="n">2</div><h3>Soạn hồ sơ</h3><p class="muted">AZ chọn mã ngành, soạn giấy đề nghị, gửi bạn ký.</p></div>
+    <div class="card"><div class="n">3</div><h3>Nộp, theo dõi</h3><p class="muted">Nộp hồ sơ, bổ sung nếu cơ quan yêu cầu. Thời hạn xử lý 03 ngày làm việc.</p></div>
+    <div class="card"><div class="n">4</div><h3>Nhận kết quả</h3><p class="muted">Giao giấy chứng nhận, kích hoạt thuế điện tử, hướng dẫn hóa đơn.</p></div>
+  </div>
+  <p class="note">Căn cứ Nghị định 168/2025/NĐ-CP về đăng ký doanh nghiệp, hộ kinh doanh, được sửa đổi bởi Nghị định 296/2026/NĐ-CP. Lệ phí nhà nước theo mức của từng tỉnh, thành phố; phí dịch vụ AZ là giá tham khảo.</p>
+</section>
+
+<!-- TÍNH THUẾ -->
+<section class="view" id="v-tinh-thue" hidden>
+  <div class="sec-head"><p class="eyebrow">Công cụ tính thuế</p><h2>Ước tính thuế năm của hộ kinh doanh</h2></div>
+  <div class="calc">
+    <div class="card" style="display:grid;gap:16px;align-content:start">
+      <div class="field"><label for="cIndustry">Ngành nghề chính</label><select id="cIndustry"></select></div>
+      <div class="field"><label for="cRevenue">Doanh thu (đồng)</label><input id="cRevenue" inputmode="numeric" value="1.800.000.000"></div>
+      <div class="field"><label for="cCost">Chi phí có chứng từ hợp lệ (đồng)</label><input id="cCost" inputmode="numeric" value="1.500.000.000"><span class="note">Dùng cho phương pháp tính trên thu nhập.</span></div>
+      <div class="field"><label>Đơn vị nhập</label>
+        <div class="seg" id="cPeriod"><button type="button" data-p="year" aria-pressed="true">Theo năm</button><button type="button" data-p="month" aria-pressed="false">Theo tháng</button></div>
+      </div>
+      <p class="note">Số liệu mẫu đang hiển thị. Thay bằng doanh thu thật của hộ bạn.</p>
+    </div>
+    <div class="card result" id="cResult" style="display:grid;gap:14px;align-content:start"></div>
+  </div>
+  <p class="note">Ước tính theo Nghị quyết 198/2025/QH15, Nghị định 68/2026/NĐ-CP và Nghị định 141/2026/NĐ-CP. Kết quả để tham khảo, chưa phải số thuế chính thức. Liên hệ AZ để kiểm tra trường hợp cụ thể.</p>
+</section>
+
+<!-- TỶ LỆ NGÀNH -->
+<section class="view" id="v-ty-le" hidden>
+  <div class="sec-head"><p class="eyebrow">Tra cứu</p><h2>Tỷ lệ % thuế tính trên doanh thu theo ngành</h2></div>
+  <div class="field" style="max-width:420px"><label for="rateSearch">Tìm ngành</label><input id="rateSearch" placeholder="Ví dụ: tạp hóa, ăn uống, cho thuê nhà"></div>
+  <div class="card tablebox" style="padding:0">
+    <table><thead><tr><th>Nhóm ngành</th><th>Ví dụ</th><th class="r">GTGT</th><th class="r">TNCN</th></tr></thead><tbody id="rateBody" class="num"></tbody></table>
+  </div>
+  <p class="note">GTGT tính trên toàn bộ doanh thu khi doanh thu năm vượt 1 tỷ. TNCN theo tỷ lệ tính trên phần doanh thu vượt 1 tỷ (nhóm 2). Một số hàng hóa, dịch vụ không chịu thuế GTGT như khám chữa bệnh, dạy học.</p>
+</section>
+
+<!-- LỊCH NỘP BÁO CÁO THUẾ -->
+<section class="view" id="v-lich-nop-bao-cao" hidden>
+  <div class="sec-head"><p class="eyebrow">Lịch nộp báo cáo thuế</p><h2>Hạn nộp tờ khai, báo cáo thuế 12 tháng tới</h2>
+  <p>Chọn nhóm của hộ để xem đúng các hạn phải nộp. Ngày hạn rơi vào thứ Bảy, Chủ nhật đã được lùi sang thứ Hai.</p></div>
+  <div class="seg" id="calTabs" style="max-width:560px">
+    <button type="button" data-g="1" aria-pressed="false">Nhóm 1 · ≤ 1 tỷ</button>
+    <button type="button" data-g="23" aria-pressed="true">Nhóm 2, 3 · khai quý</button>
+    <button type="button" data-g="4" aria-pressed="false">Nhóm 4 · khai tháng</button>
+  </div>
+  <div class="card" style="padding-block:4px 8px"><div class="tl" id="timeline"></div></div>
+  <p class="note">Hạn nghỉ lễ, Tết được lùi sang ngày làm việc tiếp theo theo quy định. Hạn quyết toán TNCN năm mang tính tham khảo, áp dụng theo hướng dẫn của cơ quan thuế. AZ nhắc khách hàng qua Zalo trước mỗi hạn 7 ngày.</p>
+</section>
+
+<!-- HƯỚNG DẪN -->
+<section class="view" id="v-huong-dan" hidden>
+  <div class="sec-head"><p class="eyebrow">Hướng dẫn</p><h2>30 loại hình hộ kinh doanh phổ biến tại Việt Nam</h2>
+  <p>Mỗi bài tóm tắt điều kiện, giấy phép, tỷ lệ thuế, sổ sách và phần mềm phù hợp cho từng ngành.</p></div>
+  <div class="row" style="align-items:end">
+    <div class="field" style="flex:1;min-width:220px;max-width:380px"><label for="gSearch">Tìm loại hình</label><input id="gSearch" placeholder="Ví dụ: cà phê, phòng trọ, spa"></div>
+    <div class="chips" id="gCats"></div>
+  </div>
+  <div class="guide-grid" id="gList"></div>
+</section>
+
+<section class="view" id="v-bai-viet" hidden></section>
+
+<!-- LIÊN HỆ -->
+<section class="view" id="v-lien-he" hidden>
+  <div class="sec-head"><p class="eyebrow">Đăng ký tư vấn</p><h2>Để lại thông tin, AZ gọi lại trong ngày làm việc</h2></div>
+  <div class="grid2">
+    <form class="card" id="leadForm" style="display:grid;gap:14px" novalidate>
+      <div class="field"><label for="lName">Họ tên chủ hộ</label><input id="lName" required autocomplete="name"></div>
+      <div class="field"><label for="lPhone">Số điện thoại / Zalo</label><input id="lPhone" required inputmode="tel" autocomplete="tel"></div>
+      <div class="grid2" style="gap:14px">
+        <div class="field"><label for="lIndustry">Ngành nghề</label><select id="lIndustry"></select></div>
+        <div class="field"><label for="lRevenue">Doanh thu năm</label><select id="lRevenue"><option>Nhóm 1 · đến 1 tỷ</option><option>Nhóm 2 · 1 – 3 tỷ</option><option>Nhóm 3 · 3 – 50 tỷ</option><option>Nhóm 4 · trên 50 tỷ</option><option>Chưa rõ</option></select></div>
+      </div>
+      <div class="grid2" style="gap:14px">
+        <div class="field"><label for="lPlan">Dịch vụ cần làm</label><select id="lPlan"><option>Chưa chọn</option><option>Gói Cơ bản</option><option>Gói Tiêu chuẩn</option><option>Gói Nâng cao</option><option>Gói Chuyên sâu</option><option>Đăng ký hộ kinh doanh mới</option><option>Thay đổi đăng ký hộ kinh doanh</option><option>Tạm ngừng, tiếp tục kinh doanh</option><option>Chấm dứt hộ kinh doanh</option><option>Đăng ký thuế cá nhân kinh doanh</option><option>Xin giấy phép con</option><option>Dịch vụ lẻ khác</option></select></div>
+        <div class="field"><label for="lSoft">Phần mềm MISA</label><select id="lSoft"><option>Chưa cần</option><option>MISA eShop (bán hàng)</option><option>MISA meInvoice (hóa đơn)</option><option>MISA eSign (chữ ký số)</option><option>MISA AMIS Kế toán HKD</option><option>Cần tư vấn chọn</option></select></div>
+      </div>
+      <div class="field"><label for="lNote">Nội dung cần tư vấn</label><textarea id="lNote" placeholder="Ví dụ: bán tạp hóa và Shopee, muốn đăng ký hóa đơn điện tử"></textarea></div>
+      <p class="note" id="lErr" style="color:var(--alert)" hidden></p>
+      <button class="btn" type="submit" id="lSubmit">Gửi yêu cầu tư vấn</button>
+    </form>
+    <div style="display:grid;gap:16px;align-content:start">
+      <div class="card" style="display:grid;gap:10px">
+        <h3>Liên hệ trực tiếp</h3>
+        <p class="muted">Dịch vụ kế toán nhanh AZ</p>
+        <div class="contact-box"><span class="phone num">0901 455 988</span><button class="btn ghost sm" data-copy="0901455988">Chép số</button></div>
+        <div class="row"><a class="btn" href="https://zalo.me/0901455988" target="_blank" rel="noopener">Nhắn Zalo</a></div>
+        <p class="note">Email: phuong.aztax@gmail.com · Website: dichvuketoanhokinhdoanh.com</p>
+      </div>
+      <div class="card" id="leadDone" hidden style="display:grid;gap:10px">
+        <h3 id="leadDoneTitle">Đã nhận yêu cầu</h3>
+        <p class="muted" id="leadDoneText"></p>
+        <textarea id="leadMsg" readonly style="width:100%;min-height:120px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--paper)"></textarea>
+        <button class="btn ghost" id="copyMsg" type="button">Chép nội dung để gửi Zalo</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUẢN TRỊ -->
+<section class="view" id="v-quan-tri" hidden>
+  <div class="row" style="justify-content:space-between">
+    <div class="sec-head"><p class="eyebrow">Chỉ chủ website thấy</p><h2>Yêu cầu tư vấn</h2></div>
+    <div class="row" id="adminStats"></div>
+  </div>
+  <div class="card tablebox" style="padding:0">
+    <table><thead><tr><th>Ngày</th><th>Khách</th><th>Ngành · Nhóm</th><th>Nhu cầu</th><th>Trạng thái</th></tr></thead>
+    <tbody id="leadBody"><tr><td colspan="5" class="muted">Đang tải yêu cầu…</td></tr></tbody></table>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <b>Dịch vụ kế toán nhanh AZ</b>
+  <span>Kế toán, kê khai thuế, phần mềm MISA cho hộ kinh doanh · ĐT/Zalo 0901 455 988 · dichvuketoanhokinhdoanh.com</span>
+  <span>Thông tin trên website mang tính tham khảo theo quy định hiện hành năm 2026.</span>
+</div></footer>
+
+<a class="btn fab" href="https://zalo.me/0901455988" target="_blank" rel="noopener">Zalo 0901 455 988</a>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const RATES=[
+ {id:"pp",name:"Phân phối, cung cấp hàng hóa",ex:"Tạp hóa, bán lẻ, bán hàng online, bán buôn",vat:1,pit:.5},
+ {id:"dv",name:"Dịch vụ, xây dựng không bao thầu nguyên vật liệu",ex:"Tư vấn, cắt tóc, spa, giặt là, quảng cáo",vat:5,pit:2},
+ {id:"lt",name:"Dịch vụ lưu trú",ex:"Nhà nghỉ, homestay, khách sạn mini",vat:5,pit:2},
+ {id:"sx",name:"Sản xuất, vận tải, dịch vụ gắn với hàng hóa, xây dựng có bao thầu NVL",ex:"Xưởng may, chế biến, vận tải, sửa chữa xe",vat:3,pit:1.5},
+ {id:"au",name:"Dịch vụ ăn uống",ex:"Quán ăn, quán cà phê, nhà hàng",vat:3,pit:1.5},
+ {id:"ts",name:"Cho thuê tài sản",ex:"Cho thuê nhà, phòng trọ, mặt bằng, xe",vat:5,pit:5},
+ {id:"kb",name:"Khám chữa bệnh, dạy học (không chịu GTGT)",ex:"Phòng khám, dạy thêm, năng khiếu",vat:0,pit:2},
+ {id:"dl",name:"Đại lý xổ số, bảo hiểm, bán hàng đa cấp",ex:"Hoa hồng đại lý",vat:0,pit:5},
+ {id:"kh",name:"Hoạt động kinh doanh khác",ex:"Các ngành chưa liệt kê",vat:2,pit:1},
+];
+const GROUPS=[
+ {g:1,range:"≤ 1 tỷ/năm",tag:"tag",items:["Không nộp thuế GTGT, TNCN","Ghi sổ doanh thu mẫu S1a-HKD","Thông báo doanh thu năm trước 31/01","Không bắt buộc hóa đơn điện tử"]},
+ {g:2,range:"1 – 3 tỷ/năm",tag:"tag sky",items:["GTGT = doanh thu × tỷ lệ ngành","TNCN: (doanh thu − 1 tỷ) × tỷ lệ, hoặc 15% trên thu nhập","Khai thuế theo quý","Bắt buộc hóa đơn điện tử"]},
+ {g:3,range:"3 – 50 tỷ/năm",tag:"tag warn",items:["GTGT = doanh thu × tỷ lệ ngành","TNCN = (doanh thu − chi phí) × 17%","Khai theo quý, quyết toán TNCN năm","Sổ S2b–S2e, S3a-HKD, chứng từ chi phí"]},
+ {g:4,range:"> 50 tỷ/năm",tag:"tag alert",items:["GTGT = doanh thu × tỷ lệ ngành","TNCN = (doanh thu − chi phí) × 20%","Khai thuế theo tháng, hạn ngày 20","Sổ kế toán đầy đủ, hóa đơn bắt buộc"]},
+];
+const PLANS=[
+ {g:1,name:"Gói Cơ bản",price:"300.000đ",unit:"/ quý",items:["Mở sổ doanh thu S1a-HKD","Theo dõi doanh thu lũy kế, báo khi gần 1 tỷ","Thông báo doanh thu năm","Tư vấn qua Zalo"]},
+ {g:2,name:"Gói Tiêu chuẩn",price:"800.000đ",unit:"/ tháng",feature:true,items:["Đăng ký hóa đơn điện tử máy tính tiền","Ghi sổ doanh thu, chi phí","Kê khai GTGT, TNCN theo quý","So sánh phương pháp tỷ lệ và thu nhập","Đối chiếu doanh thu sàn TMĐT"]},
+ {g:3,name:"Gói Nâng cao",price:"Từ 1.500.000đ",unit:"/ tháng",items:["Sổ S2b–S2e, S3a-HKD","Quản lý kho, công nợ","Kiểm soát chứng từ chi phí hợp lệ","Kê khai quý, quyết toán TNCN năm"]},
+ {g:4,name:"Gói Chuyên sâu",price:"Liên hệ",unit:"",items:["Kê khai GTGT, TNCN hằng tháng","Sổ kế toán đầy đủ, báo cáo quản trị","Rà soát rủi ro thuế định kỳ","Đại diện làm việc với cơ quan thuế"]},
+];
+const SOFT=[
+ {k:"eShop",code:"ES",name:"MISA eShop",sub:"Phần mềm quản lý bán hàng",items:["Bán tại cửa hàng, trên sàn TMĐT, mạng xã hội","Xuất hóa đơn điện tử từ máy tính tiền","Quản lý kho, công nợ, thu chi","Có gói riêng cho nhà hàng, quán ăn"]},
+ {k:"meInvoice",code:"HĐ",name:"MISA meInvoice",sub:"Hóa đơn điện tử",items:["Hóa đơn có mã, hóa đơn khởi tạo từ máy tính tiền","Lập, gửi hóa đơn trên điện thoại, máy tính","Phù hợp hộ không cần phần mềm bán hàng"]},
+ {k:"eSign",code:"KS",name:"MISA eSign",sub:"Chữ ký số từ xa",items:["Ký hóa đơn, tờ khai thuế trên điện thoại","Không cần USB token","Dùng cho kê khai thuế điện tử"]},
+ {k:"AMIS",code:"KT",name:"MISA AMIS Kế toán hộ kinh doanh",sub:"Phần mềm kế toán",items:["Lập sổ sách hộ kinh doanh theo mẫu","Tự tổng hợp số liệu kê khai thuế","Phù hợp hộ nhóm 3, nhóm 4 cần sổ đầy đủ"]},
+];
+const COMBO=[
+ [1,"Gói Cơ bản","MISA eShop gói cơ bản (nếu cần bán hàng trên điện thoại)"],
+ [2,"Gói Tiêu chuẩn","MISA eShop hoặc MISA meInvoice + MISA eSign"],
+ [3,"Gói Nâng cao","MISA eShop + MISA AMIS Kế toán HKD + MISA eSign"],
+ [4,"Gói Chuyên sâu","MISA AMIS Kế toán HKD + MISA meInvoice + MISA eSign"],
+];
+const CATS=["Tất cả","Bán lẻ","Ăn uống","Dịch vụ","Lưu trú, cho thuê","Sản xuất, vận tải","Y tế, giáo dục"];
+const GUIDES=[
+ {s:"tap-hoa",n:"Tạp hóa, cửa hàng tiện lợi",c:"Bán lẻ",r:"pp",lic:["Giấy chứng nhận đăng ký hộ kinh doanh","Bán rượu: giấy phép bán lẻ rượu; bán thuốc lá: giấy phép bán lẻ sản phẩm thuốc lá"],tax:["Hàng hóa áp tỷ lệ GTGT 1%, TNCN 0,5%","Hàng nhiều mã nhỏ lẻ nên dùng phần mềm bán hàng để doanh thu tự lên sổ","Doanh thu tiền mặt và chuyển khoản đều phải ghi nhận"],sw:"MISA eShop gói bán lẻ, xuất hóa đơn từ máy tính tiền"},
+ {s:"ban-hang-online",n:"Bán hàng online, sàn thương mại điện tử",c:"Bán lẻ",r:"pp",lic:["Đăng ký hộ kinh doanh nếu bán thường xuyên","Cung cấp mã số thuế cho sàn"],tax:["Cộng gộp doanh thu tất cả sàn, mạng xã hội, chuyển khoản để xét ngưỡng 1 tỷ","Sàn có chức năng thanh toán khấu trừ, nộp thay thuế một số trường hợp; phần đã nộp thay không khai lại","Lưu báo cáo doanh thu, chứng từ khấu trừ của sàn hằng tháng"],sw:"MISA eShop quản lý bán hàng đa kênh"},
+ {s:"quan-an",n:"Quán ăn, nhà hàng",c:"Ăn uống",r:"au",lic:["Giấy chứng nhận cơ sở đủ điều kiện an toàn thực phẩm (hoặc cam kết ATTP với cơ sở nhỏ lẻ)","Đủ điều kiện phòng cháy chữa cháy theo quy mô"],tax:["Dịch vụ ăn uống: GTGT 3%, TNCN 1,5%","Hóa đơn xuất theo từng bàn, từng đơn khi doanh thu năm vượt 1 tỷ","Giữ hóa đơn mua thực phẩm nếu tính thuế trên thu nhập"],sw:"MISA eShop gói nhà hàng, quán ăn"},
+ {s:"ca-phe",n:"Quán cà phê, trà sữa",c:"Ăn uống",r:"au",lic:["Giấy chứng nhận đủ điều kiện ATTP","Phát nhạc công cộng: lưu ý bản quyền âm nhạc"],tax:["Áp tỷ lệ dịch vụ ăn uống: GTGT 3%, TNCN 1,5%","Doanh thu từ app giao đồ ăn phải cộng vào doanh thu chung","Đối chiếu doanh thu app với tiền thực nhận hằng tháng"],sw:"MISA eShop gói quán, order tại bàn"},
+ {s:"thoi-trang",n:"Shop quần áo, giày dép, thời trang",c:"Bán lẻ",r:"pp",lic:["Giấy chứng nhận đăng ký hộ kinh doanh","Hàng nhập khẩu cần chứng từ nguồn gốc"],tax:["GTGT 1%, TNCN 0,5% trên doanh thu bán hàng","Hàng không rõ nguồn gốc có rủi ro bị xử phạt khi kiểm tra","Kiểm kê tồn kho cuối năm nếu tính thuế trên thu nhập"],sw:"MISA eShop quản lý kho theo size, màu"},
+ {s:"nha-thuoc",n:"Nhà thuốc, quầy thuốc",c:"Y tế, giáo dục",r:"pp",lic:["Chứng chỉ hành nghề dược của người phụ trách chuyên môn","Giấy chứng nhận đủ điều kiện kinh doanh dược","Đạt tiêu chuẩn GPP"],tax:["Bán thuốc là phân phối hàng hóa: GTGT 1%, TNCN 0,5%","Theo dõi hạn dùng, số lô trên phần mềm","Kết nối liên thông dữ liệu với hệ thống dược quốc gia"],sw:"Phần mềm bán hàng có quản lý lô, hạn dùng; MISA meInvoice"},
+ {s:"dien-thoai-dien-may",n:"Cửa hàng điện thoại, điện máy",c:"Bán lẻ",r:"pp",lic:["Giấy chứng nhận đăng ký hộ kinh doanh","Hóa đơn, chứng từ nhập hàng rõ nguồn gốc"],tax:["Bán hàng GTGT 1%, TNCN 0,5%; dịch vụ sửa chữa tách riêng theo tỷ lệ sửa chữa","Giá trị đơn hàng lớn nên khách thường lấy hóa đơn","Quản lý theo số IMEI, số serial"],sw:"MISA eShop quản lý IMEI, bảo hành"},
+ {s:"vat-lieu-xay-dung",n:"Vật liệu xây dựng",c:"Bán lẻ",r:"pp",lic:["Giấy chứng nhận đăng ký hộ kinh doanh","Bãi chứa phù hợp quy hoạch, môi trường"],tax:["Bán vật liệu: GTGT 1%, TNCN 0,5%","Nhận thi công kèm vật liệu tính theo xây dựng có bao thầu: GTGT 3%, TNCN 1,5%","Bán công nợ cho nhà thầu: theo dõi công nợ, xuất hóa đơn đúng thời điểm giao hàng"],sw:"MISA eShop + quản lý công nợ"},
+ {s:"vang-bac",n:"Tiệm vàng bạc, trang sức",c:"Bán lẻ",r:"pp",lic:["Gia công vàng trang sức: giấy chứng nhận đủ điều kiện sản xuất vàng trang sức, mỹ nghệ","Mua bán vàng miếng chỉ tổ chức được Ngân hàng Nhà nước cấp phép"],tax:["Mua bán vàng bạc: thuế tính theo hướng dẫn riêng, AZ xem từng trường hợp","Gia công trang sức áp tỷ lệ sản xuất, dịch vụ gắn với hàng hóa","Giao dịch giá trị lớn nên thanh toán qua ngân hàng"],sw:"Phần mềm bán hàng có quản lý tuổi vàng, trọng lượng"},
+ {s:"toc-nail",n:"Salon tóc, tiệm nail",c:"Dịch vụ",r:"dv",lic:["Giấy chứng nhận đăng ký hộ kinh doanh","Đảm bảo vệ sinh, an toàn hóa chất"],tax:["Dịch vụ: GTGT 5%, TNCN 2%","Bán kèm mỹ phẩm, dầu gội tách riêng theo tỷ lệ hàng hóa 1% và 0,5%","Thợ làm ăn chia phần trăm: lập bảng chi trả để tính chi phí"],sw:"MISA eShop quản lý lịch hẹn, thẻ dịch vụ"},
+ {s:"spa",n:"Spa, chăm sóc da",c:"Dịch vụ",r:"dv",lic:["Chỉ làm dịch vụ chăm sóc không xâm lấn với đăng ký hộ kinh doanh","Phun xăm, tiêm, phẫu thuật thẩm mỹ cần giấy phép khám bệnh, chữa bệnh"],tax:["Dịch vụ GTGT 5%, TNCN 2%","Bán thẻ liệu trình trả trước: ghi nhận doanh thu khi thu tiền và xuất hóa đơn","Mỹ phẩm bán lẻ tách riêng"],sw:"MISA eShop quản lý thẻ liệu trình"},
+ {s:"homestay",n:"Nhà nghỉ, homestay, khách sạn mini",c:"Lưu trú, cho thuê",r:"lt",lic:["Giấy chứng nhận đủ điều kiện về an ninh trật tự","Đảm bảo phòng cháy chữa cháy","Khai báo lưu trú của khách với công an"],tax:["Dịch vụ lưu trú: GTGT 5%, TNCN 2%","Doanh thu qua Booking, Agoda, Airbnb phải cộng vào doanh thu","Phí hoa hồng nền tảng là chi phí khi tính trên thu nhập"],sw:"MISA eShop hoặc MISA meInvoice xuất hóa đơn phòng"},
+ {s:"cho-thue-nha",n:"Cho thuê nhà, phòng trọ, mặt bằng",c:"Lưu trú, cho thuê",r:"ts",lic:["Không bắt buộc đăng ký hộ kinh doanh với cá nhân cho thuê tài sản","Phòng trọ: đảm bảo PCCC, khai báo tạm trú cho người thuê"],tax:["Cho thuê tài sản: GTGT 5%, TNCN 5%","Tổng tiền thuê trong năm vượt 1 tỷ mới phải nộp thuế","Nhận trước tiền thuê nhiều năm: phân bổ doanh thu theo năm để xét ngưỡng"],sw:"MISA meInvoice nếu bên thuê cần hóa đơn"},
+ {s:"sua-xe",n:"Sửa chữa xe máy, ô tô",c:"Sản xuất, vận tải",r:"sx",lic:["Giấy chứng nhận đăng ký hộ kinh doanh","Bảo đảm môi trường với dầu nhớt thải"],tax:["Sửa chữa, bảo dưỡng phương tiện: GTGT 3%, TNCN 1,5%","Bán phụ tùng tách riêng thì áp tỷ lệ hàng hóa","Ghi rõ tiền công và phụ tùng trên hóa đơn"],sw:"MISA eShop quản lý phụ tùng, phiếu sửa chữa"},
+ {s:"rua-xe",n:"Rửa xe, chăm sóc xe",c:"Dịch vụ",r:"dv",lic:["Giấy chứng nhận đăng ký hộ kinh doanh","Xử lý nước thải theo quy định địa phương"],tax:["Dịch vụ GTGT 5%, TNCN 2%","Bán thẻ rửa xe trả trước: ghi nhận khi thu tiền","Thu tiền mặt nhiều: ghi sổ hằng ngày"],sw:"MISA eShop gói cơ bản trên điện thoại"},
+ {s:"van-tai-hang",n:"Vận tải hàng hóa",c:"Sản xuất, vận tải",r:"sx",lic:["Giấy phép kinh doanh vận tải bằng xe ô tô","Phù hiệu xe tải, thiết bị giám sát hành trình"],tax:["Vận tải: GTGT 3%, TNCN 1,5%","Xăng dầu, cầu đường, sửa xe có hóa đơn là chi phí khi tính trên thu nhập","Hợp đồng với doanh nghiệp: xuất hóa đơn từng chuyến hoặc theo tháng"],sw:"MISA meInvoice + MISA eSign"},
+ {s:"cho-khach",n:"Chở khách, taxi, xe công nghệ",c:"Sản xuất, vận tải",r:"sx",lic:["Giấy phép kinh doanh vận tải hành khách (nếu thuộc diện cấp)","Phù hiệu xe, đăng ký với nền tảng"],tax:["Vận tải hành khách: GTGT 3%, TNCN 1,5%","Nền tảng gọi xe thường khấu trừ, nộp thay thuế cho tài xế","Chạy nhiều app: cộng gộp doanh thu để xét ngưỡng"],sw:"Thường không cần phần mềm riêng; lưu sao kê thu nhập từ app"},
+ {s:"xuong-may",n:"Xưởng may, gia công",c:"Sản xuất, vận tải",r:"sx",lic:["Giấy chứng nhận đăng ký hộ kinh doanh","Hợp đồng lao động, BHXH nếu thuê thợ thường xuyên"],tax:["Gia công, sản xuất: GTGT 3%, TNCN 1,5%","Gia công không bao nguyên liệu vẫn tính theo dịch vụ gắn với hàng hóa","Tiền công thợ, điện, thuê xưởng là chi phí khi tính trên thu nhập"],sw:"MISA AMIS Kế toán HKD + MISA meInvoice"},
+ {s:"san-xuat-thuc-pham",n:"Sản xuất bánh, thực phẩm chế biến",c:"Sản xuất, vận tải",r:"sx",lic:["Giấy chứng nhận cơ sở đủ điều kiện ATTP","Tự công bố sản phẩm; ghi nhãn hàng hóa đúng quy định"],tax:["Sản xuất: GTGT 3%, TNCN 1,5%","Bán qua đại lý, siêu thị: xuất hóa đơn theo từng lần giao","Theo dõi nguyên liệu để tính giá vốn"],sw:"MISA eShop + MISA AMIS Kế toán HKD"},
+ {s:"thuc-pham-tuoi-song",n:"Thực phẩm tươi sống, sạp chợ",c:"Bán lẻ",r:"pp",lic:["Giấy chứng nhận đăng ký hộ kinh doanh hoặc hợp đồng thuê sạp","Nguồn gốc thịt, cá: giấy kiểm dịch"],tax:["Bán hàng: TNCN 0,5% trên phần doanh thu vượt ngưỡng","Thịt, cá, rau chưa qua chế biến ở khâu thương mại không phải kê khai nộp GTGT","Bán thực phẩm đã chế biến thì tính GTGT 1%"],sw:"MISA eShop trên điện thoại"},
+ {s:"nong-san",n:"Nông sản, trái cây",c:"Bán lẻ",r:"pp",lic:["Giấy chứng nhận đăng ký hộ kinh doanh","Hàng nhập khẩu cần chứng từ kiểm dịch thực vật"],tax:["Nông sản chưa chế biến bán ở khâu thương mại không phải kê khai nộp GTGT","TNCN theo tỷ lệ phân phối hàng hóa 0,5%","Nông dân tự trồng tự bán không thuộc diện hộ kinh doanh"],sw:"MISA eShop gói cơ bản"},
+ {s:"vat-tu-nong-nghiep",n:"Phân bón, thuốc bảo vệ thực vật",c:"Bán lẻ",r:"pp",lic:["Giấy chứng nhận đủ điều kiện buôn bán phân bón","Giấy chứng nhận đủ điều kiện buôn bán thuốc bảo vệ thực vật","Người bán có chứng chỉ tập huấn"],tax:["Bán hàng: GTGT 1%, TNCN 0,5%","Bán nợ cho nông dân theo mùa vụ: theo dõi công nợ","Kho chứa phải tách riêng, đảm bảo an toàn"],sw:"MISA eShop quản lý công nợ theo mùa vụ"},
+ {s:"day-them",n:"Dạy thêm, lớp năng khiếu",c:"Y tế, giáo dục",r:"kb",lic:["Đăng ký kinh doanh dạy thêm theo quy định của ngành giáo dục","Giáo viên trường công lập lưu ý quy định cấm dạy thêm học sinh mình đang dạy"],tax:["Dạy học không chịu thuế GTGT","TNCN theo tỷ lệ dịch vụ 2% trên phần doanh thu vượt ngưỡng","Thu học phí qua chuyển khoản để có chứng từ"],sw:"MISA meInvoice nếu phụ huynh cần hóa đơn"},
+ {s:"phong-kham",n:"Phòng khám tư nhân",c:"Y tế, giáo dục",r:"kb",lic:["Giấy phép hoạt động khám bệnh, chữa bệnh","Chứng chỉ, giấy phép hành nghề của bác sĩ phụ trách"],tax:["Khám chữa bệnh không chịu thuế GTGT","TNCN 2% trên phần doanh thu vượt ngưỡng (phương pháp tỷ lệ)","Bán thuốc kèm theo tính riêng theo hàng hóa"],sw:"MISA meInvoice + MISA eSign"},
+ {s:"karaoke",n:"Karaoke, quán game, giải trí",c:"Dịch vụ",r:"dv",lic:["Giấy phép đủ điều kiện kinh doanh dịch vụ karaoke","Đủ điều kiện an ninh trật tự, PCCC"],tax:["Dịch vụ GTGT 5%, TNCN 2%","Kinh doanh karaoke còn chịu thuế tiêu thụ đặc biệt","Đồ ăn uống bán kèm có thể tách theo tỷ lệ ăn uống"],sw:"MISA eShop quản lý giờ phòng, đồ uống"},
+ {s:"quan-nhau",n:"Quán nhậu, bia, rượu",c:"Ăn uống",r:"au",lic:["Giấy chứng nhận đủ điều kiện ATTP","Giấy phép bán rượu tiêu dùng tại chỗ"],tax:["Ăn uống: GTGT 3%, TNCN 1,5%","Bia, rượu mua vào cần hóa đơn rõ nguồn gốc","Quán đông khách nên xuất hóa đơn từ máy tính tiền theo từng bàn"],sw:"MISA eShop gói nhà hàng"},
+ {s:"dai-ly",n:"Đại lý vé số, bảo hiểm",c:"Dịch vụ",r:"dl",lic:["Hợp đồng đại lý với công ty xổ số, bảo hiểm","Chứng chỉ đại lý bảo hiểm"],tax:["Thu nhập là hoa hồng; doanh nghiệp trả hoa hồng thường khấu trừ TNCN 5%","Không phải kê khai GTGT với hoa hồng đại lý bán đúng giá","Lưu chứng từ khấu trừ thuế để đối chiếu"],sw:"Thường không cần phần mềm riêng"},
+ {s:"in-an-quang-cao",n:"In ấn, quảng cáo, photocopy",c:"Dịch vụ",r:"dv",lic:["Cơ sở in: đăng ký hoạt động in với Sở Văn hóa (tùy loại ấn phẩm)","Biển quảng cáo ngoài trời cần giấy phép xây dựng nếu thuộc diện"],tax:["Dịch vụ GTGT 5%, TNCN 2%","In sản phẩm bán kèm vật liệu có thể tính theo sản xuất 3% và 1,5%","Khách doanh nghiệp thường yêu cầu hóa đơn"],sw:"MISA meInvoice + MISA eSign"},
+ {s:"xay-dung",n:"Thầu xây dựng, sửa nhà",c:"Sản xuất, vận tải",r:"sx",lic:["Giấy chứng nhận đăng ký hộ kinh doanh","Công trình lớn cần chứng chỉ năng lực theo quy định"],tax:["Bao thầu nguyên vật liệu: GTGT 3%, TNCN 1,5%","Chỉ nhận nhân công: GTGT 5%, TNCN 2%","Ghi rõ hình thức trong hợp đồng để áp đúng tỷ lệ"],sw:"MISA meInvoice + MISA AMIS Kế toán HKD"},
+ {s:"gas",n:"Cửa hàng gas, bếp gas",c:"Bán lẻ",r:"pp",lic:["Giấy chứng nhận đủ điều kiện cửa hàng bán lẻ LPG chai","Đảm bảo PCCC, khoảng cách an toàn"],tax:["Bán hàng: GTGT 1%, TNCN 0,5%","Lắp đặt, sửa bếp tách riêng theo tỷ lệ dịch vụ","Quản lý vỏ bình cược, công nợ khách quen"],sw:"MISA eShop quản lý giao hàng, công nợ"},
+];
+
+const TH=1e9;
+const $=s=>document.querySelector(s);
+const fmt=n=>Math.round(n).toLocaleString("vi-VN");
+const pct=n=>String(n).replace(".",",")+"%";
+const parse=v=>Number(String(v).replace(/[^\d]/g,""))||0;
+const norm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/đ/g,"d");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function toast(t){const el=$("#toast");el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,2200)}
+async function copy(text){try{await navigator.clipboard.writeText(text);toast("Đã chép")}catch(e){toast("Không chép được, hãy bôi đen để chép")}}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-copy]");if(b)copy(b.dataset.copy)});
+
+/* static renders */
+$("#tiers").innerHTML=GROUPS.map(g=>`<div><span class="${g.tag}">Nhóm ${g.g}</span><div class="range num">${g.range}</div><ul>${g.items.map(i=>`<li>${i}</li>`).join("")}</ul></div>`).join("");
+$("#pt-kt").innerHTML=PLANS.map(p=>`<div class="card plan ${p.feature?'feature':''}"><span class="${GROUPS[p.g-1].tag}">Nhóm ${p.g} · ${GROUPS[p.g-1].range.replace("/năm","")}</span><h3>${p.name}</h3><div class="price num">${p.price} <small>${p.unit}</small></div><ul>${p.items.map(i=>`<li>${i}</li>`).join("")}</ul><a class="btn ${p.feature?'':'ghost'}" href="#lien-he" data-plan="${p.name}">Chọn gói này</a></div>`).join("");
+$("#swList").innerHTML=SOFT.map(s=>`<div class="card sw"><span class="ico">${s.code}</span><div><h3>${s.name}</h3><div class="note">${s.sub}</div><ul>${s.items.map(i=>`<li>${i}</li>`).join("")}</ul><div class="row" style="margin-top:12px;justify-content:space-between"><b>Giá: liên hệ báo giá</b><a class="btn ghost sm" href="#lien-he" data-soft="${s.name}">Đăng ký tư vấn</a></div></div></div>`).join("");
+$("#comboBody").innerHTML=COMBO.map(([g,a,b])=>`<tr><td><span class="${GROUPS[g-1].tag}">Nhóm ${g}</span><div class="note num">${GROUPS[g-1].range}</div></td><td><b>${a}</b></td><td>${b}</td><td class="r"><a class="btn ghost sm" href="#lien-he" data-plan="${a}">Báo giá</a></td></tr>`).join("");
+$("#priceTabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+ $("#priceTabs").querySelectorAll("button").forEach(x=>{x.setAttribute("aria-pressed",x===b);$("#pt-"+x.dataset.t).hidden=x!==b})});
+document.addEventListener("click",e=>{const a=e.target.closest("[data-plan],[data-soft]");if(!a)return;
+ if(a.dataset.plan){const o=[...$("#lPlan").options].find(o=>o.text===a.dataset.plan);if(o)$("#lPlan").value=o.value}
+ if(a.dataset.soft){const o=[...$("#lSoft").options].find(o=>o.text.startsWith(a.dataset.soft));if(o)$("#lSoft").value=o.value}});
+
+/* đăng ký kinh doanh */
+const REG=[
+ {k:"moi",plan:"Đăng ký hộ kinh doanh mới",fee:"1.000.000đ",time:"03 ngày làm việc",who:"Hộ kinh doanh",
+  sum:"Cấp Giấy chứng nhận đăng ký hộ kinh doanh, kèm mã số thuế.",
+  docs:["Giấy đề nghị đăng ký hộ kinh doanh","CCCD của chủ hộ","Biên bản họp thành viên hộ gia đình (nếu các thành viên cùng đăng ký)","Văn bản ủy quyền cho chủ hộ, có công chứng hoặc chứng thực (nếu có)","Hợp đồng thuê hoặc giấy tờ chỗ ở, mặt bằng kinh doanh"],
+  az:["Chọn mã ngành nghề đúng hệ thống ngành kinh tế","Đặt tên hộ, kiểm tra không trùng trong phạm vi xã","Kích hoạt tài khoản thuế điện tử, hướng dẫn hóa đơn"]},
+ {k:"thay-doi",plan:"Thay đổi đăng ký hộ kinh doanh",fee:"700.000đ",time:"03 ngày làm việc",who:"Hộ kinh doanh",
+  sum:"Đổi tên, địa chỉ, ngành nghề, vốn, chủ hộ, thành viên hộ, thông tin đăng ký thuế. Phải đăng ký trong 10 ngày kể từ khi có thay đổi.",
+  docs:["Giấy đề nghị thay đổi nội dung đăng ký hộ kinh doanh do chủ hộ ký","Đổi chủ hộ: văn bản ủy quyền của các thành viên cho chủ hộ mới, có công chứng hoặc chứng thực","Chủ hộ mất, mất tích, mất năng lực hành vi: thêm bản sao giấy chứng tử hoặc quyết định của Tòa án","Đổi địa chỉ sang nơi cơ quan thuế khác quản lý: làm thủ tục chuyển địa điểm với cơ quan thuế trước"],
+  az:["Rà soát nghĩa vụ thuế trước khi đổi địa chỉ, đổi chủ hộ","Cập nhật thông tin trên hóa đơn điện tử, chữ ký số","Bổ sung ngành nghề mới, kiểm tra điều kiện kinh doanh"]},
+ {k:"tam-ngung",plan:"Tạm ngừng, tiếp tục kinh doanh",fee:"500.000đ",time:"03 ngày làm việc",who:"Hộ kinh doanh",
+  sum:"Thông báo tạm ngừng hoặc tiếp tục kinh doanh trước thời điểm tạm ngừng, tiếp tục theo quy định.",
+  docs:["Thông báo tạm ngừng hoặc tiếp tục kinh doanh trước thời hạn đã thông báo","Giấy ủy quyền cho AZ nộp hồ sơ"],
+  az:["Khai thuế các kỳ trước khi tạm ngừng","Tạm dừng hóa đơn điện tử","Nhắc ngày hết hạn tạm ngừng"]},
+ {k:"cham-dut",plan:"Chấm dứt hộ kinh doanh",fee:"Từ 1.000.000đ",time:"Theo hồ sơ thuế",who:"Hộ kinh doanh",
+  sum:"Đóng mã số thuế, hoàn thành nghĩa vụ thuế, nộp lại Giấy chứng nhận đăng ký hộ kinh doanh.",
+  docs:["Thông báo chấm dứt hoạt động hộ kinh doanh","Thông báo của cơ quan thuế về việc chấm dứt hiệu lực mã số thuế","Bản gốc Giấy chứng nhận đăng ký hộ kinh doanh"],
+  az:["Khai và nộp thuế đến ngày chấm dứt","Hủy hóa đơn điện tử chưa sử dụng","Đóng mã số thuế với cơ quan thuế"]},
+ {k:"ca-nhan",plan:"Đăng ký thuế cá nhân kinh doanh",fee:"300.000đ",time:"Theo cơ quan thuế",who:"Cá nhân kinh doanh",
+  sum:"Cho người cho thuê nhà, tài sản, bán hàng online nhỏ lẻ, kinh doanh không đăng ký hộ kinh doanh.",
+  docs:["CCCD của cá nhân","Hợp đồng cho thuê tài sản (nếu cho thuê)","Thông tin kênh bán hàng, tài khoản nhận tiền (nếu bán online)"],
+  az:["Đăng ký thuế, kích hoạt tài khoản eTax","Khai thuế cho thuê theo năm hoặc theo kỳ thanh toán","Đề nghị cấp hóa đơn lẻ khi bên thuê cần hóa đơn"]},
+ {k:"giay-phep",plan:"Xin giấy phép con",fee:"Từ 2.000.000đ",time:"Theo từng loại",who:"Hộ và cá nhân kinh doanh",
+  sum:"Giấy phép, giấy chứng nhận đủ điều kiện cho ngành kinh doanh có điều kiện.",
+  docs:["An toàn thực phẩm: quán ăn, cà phê, sản xuất thực phẩm","An ninh trật tự: nhà nghỉ, homestay, karaoke","Bán lẻ rượu, thuốc lá","Đủ điều kiện kinh doanh dược, phân bón, thuốc bảo vệ thực vật, gas"],
+  az:["Xác định ngành cần giấy phép gì","Chuẩn bị hồ sơ, hướng dẫn chuẩn bị cơ sở","Theo dõi đến khi có giấy phép"]},
+];
+let regSel="moi";
+function renderReg(){
+ $("#regPick").innerHTML=REG.map(r=>`<button type="button" data-k="${r.k}" aria-pressed="${r.k===regSel}">${r.plan}</button>`).join("");
+ const r=REG.find(x=>x.k===regSel);
+ $("#regDetail").innerHTML=`<div style="display:grid;gap:10px;align-content:start"><span class="tag">${r.who}</span><p>${r.sum}</p>
+  <div class="row"><span class="note">Thời hạn xử lý: <b>${r.time}</b></span><span class="note">Phí AZ: <b class="num">${r.fee}</b></span></div>
+  <div><b>AZ làm thêm cho bạn</b><ul style="margin:6px 0 0;padding-left:18px;color:var(--muted)">${r.az.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+  <div class="row"><a class="btn" href="#lien-he" data-plan="${r.plan}">Nhờ AZ làm thủ tục này</a></div></div>
+  <div><b>Hồ sơ cần có</b><div class="check" style="margin-top:8px">${r.docs.map((d,i)=>`<label><input type="checkbox" id="rg-${r.k}-${i}">${d}</label>`).join("")}</div></div>`}
+$("#regPick").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;regSel=b.dataset.k;renderReg()});
+renderReg();
+$("#regCards").innerHTML=REG.map(r=>`<div class="card plan" style="grid-template-rows:auto auto 1fr auto"><span class="tag ${r.who==="Cá nhân kinh doanh"?"sky":r.who.startsWith("Hộ và")?"warn":""}">${r.who}</span><h3>${r.plan}</h3><p class="muted" style="font-size:.94rem">${r.sum}</p><div class="row" style="justify-content:space-between"><b class="num">${r.fee}</b><a class="btn ghost sm" href="#lien-he" data-plan="${r.plan}">Đăng ký</a></div></div>`).join("");
+
+const opts=RATES.map(r=>`<option value="${r.id}">${r.name}</option>`).join("");
+$("#cIndustry").innerHTML=opts;$("#lIndustry").innerHTML=opts;
+
+/* routing */
+const VIEWS=["trang-chu","bang-gia","dang-ky-kinh-doanh","tinh-thue","ty-le","lich-nop-bao-cao","huong-dan","lien-he","quan-tri"];
+function route(){let h=location.hash.slice(1);let view=h,navKey=h;
+ const art=h.startsWith("hd-")&&GUIDES.find(g=>"hd-"+g.s===h);
+ if(art){view="bai-viet";navKey="huong-dan";renderArticle(art)}
+ else if(!VIEWS.includes(h)){view=navKey="trang-chu"}
+ [...VIEWS,"bai-viet"].forEach(v=>$("#v-"+v).hidden=v!==view);
+ document.querySelectorAll("nav.main a").forEach(a=>{if(a.getAttribute("href")==="#"+navKey)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+ $("#nav").classList.remove("open");$("#menuBtn").setAttribute("aria-expanded","false");
+ window.scrollTo(0,0);if(view==="quan-tri")loadAdmin()}
+addEventListener("hashchange",route);
+$("#menuBtn").onclick=()=>{const o=$("#nav").classList.toggle("open");$("#menuBtn").setAttribute("aria-expanded",o)};
+
+/* calculator */
+let period="year";
+$("#cPeriod").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const np=b.dataset.p;if(np===period)return;
+ const k=np==="month"?1/12:12;["#cRevenue","#cCost"].forEach(s=>$(s).value=fmt(parse($(s).value)*k));
+ period=np;$("#cPeriod").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));calc()});
+["#cRevenue","#cCost"].forEach(s=>$(s).addEventListener("input",e=>{const el=e.target,v=parse(el.value);el.value=v?fmt(v):"";calc()}));
+$("#cIndustry").addEventListener("change",calc);
+function taxFor(rev,cost,r){
+ const res={group:1,vat:0,pitRate:0,pitIncome:0,incomeRate:0,method:null};
+ if(rev<=TH)return res;
+ res.vat=rev*r.vat/100;const income=Math.max(0,rev-cost);
+ if(rev<=3e9){res.group=2;res.incomeRate=15;res.pitRate=(rev-TH)*r.pit/100;res.pitIncome=income*.15;res.method=res.pitIncome<res.pitRate?"income":"rate"}
+ else if(rev<=5e10){res.group=3;res.incomeRate=17;res.pitIncome=income*.17;res.method="income"}
+ else{res.group=4;res.incomeRate=20;res.pitIncome=income*.2;res.method="income"}
+ return res}
+function calc(){
+ const k=period==="month"?12:1;const rev=parse($("#cRevenue").value)*k,cost=parse($("#cCost").value)*k;
+ const r=RATES.find(x=>x.id===$("#cIndustry").value);const t=taxFor(rev,cost,r);const box=$("#cResult");const G=GROUPS[t.group-1];
+ if(!rev){box.innerHTML=`<p class="muted">Nhập doanh thu để xem kết quả.</p>`;return}
+ if(t.group===1){box.innerHTML=`<span class="${G.tag}">Nhóm 1 · doanh thu ≤ 1 tỷ</span>
+  <div><div class="muted">Thuế phải nộp cả năm</div><div class="big num">0đ</div></div>
+  <p>Hộ không nộp thuế GTGT, TNCN. Còn cách ngưỡng <b class="num">${fmt(TH-rev)}đ</b>.</p>
+  <ul style="margin:0;padding-left:18px" class="muted"><li>Ghi sổ doanh thu mẫu S1a-HKD</li><li>Thông báo doanh thu năm trước 31/01</li><li>Vượt 1 tỷ trong năm: đăng ký hóa đơn điện tử trong 30 ngày</li></ul>`;return}
+ const pit=t.method==="income"?t.pitIncome:t.pitRate,total=t.vat+pit;
+ const cmp=t.group===2?`<div class="cmp">
+  <div class="${t.method==='rate'?'best':''}"><div class="note">TNCN theo tỷ lệ</div><b class="num">${fmt(t.pitRate)}đ</b><div class="note num">(${fmt(rev)} − 1 tỷ) × ${pct(r.pit)}</div></div>
+  <div class="${t.method==='income'?'best':''}"><div class="note">TNCN theo thu nhập</div><b class="num">${fmt(t.pitIncome)}đ</b><div class="note num">(${fmt(rev)} − ${fmt(cost)}) × 15%</div></div></div>
+  <p class="note">Phương pháp có lợi hơn được đánh dấu. Phương pháp thu nhập cần sổ sách, chứng từ chi phí hợp lệ và áp dụng ổn định 2 năm.</p>`
+  :`<p class="note">Nhóm ${t.group} bắt buộc tính TNCN trên thu nhập: (${fmt(rev)} − ${fmt(cost)}) × ${t.incomeRate}%. Khai thuế theo ${t.group===4?"tháng":"quý"}.</p>`;
+ box.innerHTML=`<span class="${G.tag}">Nhóm ${t.group} · doanh thu ${G.range.replace("/năm","")}</span>
+  <div><div class="muted">Tổng thuế ước tính cả năm</div><div class="big num">${fmt(total)}đ</div><div class="note num">Khoảng ${fmt(total/12)}đ mỗi tháng · ${(total/rev*100).toFixed(2).replace(".",",")}% doanh thu</div></div>
+  <div class="tablebox"><table class="num"><tbody>
+   <tr><td>Thuế GTGT (${fmt(rev)} × ${pct(r.vat)})</td><td class="r">${fmt(t.vat)}đ</td></tr>
+   <tr><td>Thuế TNCN (${t.method==="income"?"trên thu nhập":"theo tỷ lệ"})</td><td class="r">${fmt(pit)}đ</td></tr>
+   <tr><td><b>Cộng</b></td><td class="r"><b>${fmt(total)}đ</b></td></tr></tbody></table></div>
+  ${cmp}<a class="btn" href="#lien-he">Nhờ AZ kê khai giúp</a>`}
+calc();
+
+/* rate table */
+function renderRates(q=""){q=norm(q);const rows=RATES.filter(r=>!q||norm(r.name+" "+r.ex).includes(q));
+ $("#rateBody").innerHTML=rows.length?rows.map(r=>`<tr><td><b>${r.name}</b></td><td class="muted">${r.ex}</td><td class="r">${r.vat?pct(r.vat):"Không chịu"}</td><td class="r">${pct(r.pit)}</td></tr>`).join(""):`<tr><td colspan="4" class="muted">Không tìm thấy ngành. Xếp vào "Hoạt động kinh doanh khác" hoặc hỏi AZ.</td></tr>`}
+$("#rateSearch").addEventListener("input",e=>renderRates(e.target.value));renderRates();
+
+/* calendar */
+const W=["CN","T2","T3","T4","T5","T6","T7"];
+function shift(d){const x=new Date(d);while(x.getDay()===0||x.getDay()===6)x.setDate(x.getDate()+1);return x}
+const lastDay=(y,m)=>new Date(y,m+1,0);
+function events(g){const now=new Date(),y=now.getFullYear(),list=[];
+ for(const yy of [y,y+1]){
+  if(g==="1"){list.push([new Date(yy,0,31),`Thông báo doanh thu năm ${yy-1}`,"Mẫu 01/TKN-CNKD · hộ có doanh thu ≤ 1 tỷ","tag"]);
+   list.push([new Date(yy,6,31),`Thông báo doanh thu 6 tháng đầu năm ${yy}`,"Hộ mới ra kinh doanh trong 6 tháng đầu năm","tag sky"])}
+  if(g==="23"){[[0,"IV",yy-1],[3,"I",yy],[6,"II",yy],[9,"III",yy]].forEach(([m,q,qy])=>list.push([lastDay(yy,m),`Tờ khai thuế GTGT, TNCN quý ${q}/${qy}`,"Nộp tờ khai và tiền thuế cùng hạn","tag sky"]))}
+  if(g==="4"){for(let m=0;m<12;m++){const pm=new Date(yy,m-1,1);list.push([new Date(yy,m,20),`Tờ khai thuế GTGT, TNCN tháng ${pm.getMonth()+1}/${pm.getFullYear()}`,"Nộp tờ khai và tiền thuế cùng hạn","tag alert"])}}
+  if(g!=="1"){list.push([new Date(yy,3,30),`Quyết toán thuế TNCN năm ${yy-1}`,"Hạn tham khảo · cùng báo cáo sổ sách năm","tag warn"]);
+   list.push([new Date(yy,0,31),`Thông báo doanh thu, phương pháp tính thuế năm ${yy}`,"Hộ đổi phương pháp hoặc mới vượt ngưỡng","tag plain"])}
+ }
+ const today=new Date(now.getFullYear(),now.getMonth(),now.getDate()),end=new Date(today);end.setMonth(end.getMonth()+12);
+ return list.map(e=>[shift(e[0]),...e.slice(1)]).filter(e=>e[0]>=today&&e[0]<=end).sort((a,b)=>a[0]-b[0])}
+function renderCal(g){const now=new Date();let lastMo="";
+ $("#timeline").innerHTML=events(g).map(([d,t,who,c])=>{const days=Math.ceil((d-now)/864e5),mo=`Tháng ${d.getMonth()+1}/${d.getFullYear()}`;
+  const head=mo!==lastMo?`<div class="mo">${mo}</div>`:"";lastMo=mo;
+  return head+`<div class="it"><div class="d num">${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}<small>${W[d.getDay()]}</small></div><div><b>${t}</b><div class="note">${who}</div></div><span class="${days<=14?'tag alert':c} num">Còn ${days} ngày</span></div>`}).join("")}
+$("#calTabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;$("#calTabs").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderCal(b.dataset.g)});
+renderCal("23");
+
+/* guides */
+let gCat="Tất cả";
+$("#gCats").innerHTML=CATS.map(c=>`<button type="button" aria-pressed="${c===gCat}">${c}</button>`).join("");
+$("#gCats").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;gCat=b.textContent;$("#gCats").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderGuides()});
+$("#gSearch").addEventListener("input",renderGuides);
+function renderGuides(){const q=norm($("#gSearch").value);
+ const rows=GUIDES.map((g,i)=>({...g,i})).filter(g=>(gCat==="Tất cả"||g.c===gCat)&&(!q||norm(g.n+" "+g.c).includes(q)));
+ $("#gList").innerHTML=rows.length?rows.map(g=>{const r=RATES.find(x=>x.id===g.r);return `<a class="gcard" href="#hd-${g.s}"><span class="no num">${String(g.i+1).padStart(2,"0")}</span><b>${g.n}</b><span class="note">${g.c} · GTGT ${r.vat?pct(r.vat):"không chịu"} · TNCN ${pct(r.pit)}</span></a>`}).join(""):`<p class="muted">Chưa có bài cho loại hình này. Gọi AZ để được hướng dẫn riêng.</p>`}
+renderGuides();
+function renderArticle(g){const r=RATES.find(x=>x.id===g.r),i=GUIDES.indexOf(g);const prev=GUIDES[i-1],next=GUIDES[i+1];
+ const ex=1.5e9,vat=ex*r.vat/100,pit=(ex-TH)*r.pit/100;
+ $("#v-bai-viet").innerHTML=`<p class="crumb"><a href="#huong-dan">Hướng dẫn</a> <span class="muted">/ ${g.c}</span></p>
+ <div class="article"><article class="body">
+  <div class="sec-head"><p class="eyebrow">Bài ${i+1}/30 · ${g.c}</p><h2>Hướng dẫn thuế và sổ sách: ${g.n}</h2>
+  <p>Những việc hộ kinh doanh ${g.n.toLowerCase()} cần làm để đăng ký, kê khai thuế và ghi sổ đúng theo chính sách năm 2026.</p></div>
+  <div><h3>1. Điều kiện, giấy phép</h3><ul>${g.lic.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+  <div><h3>2. Tỷ lệ thuế áp dụng</h3>
+   <div class="tablebox" style="margin-top:8px"><table class="num"><thead><tr><th>Nhóm ngành</th><th class="r">GTGT</th><th class="r">TNCN</th></tr></thead>
+   <tbody><tr><td>${r.name}</td><td class="r">${r.vat?pct(r.vat):"Không chịu"}</td><td class="r">${pct(r.pit)}</td></tr></tbody></table></div>
+   <p class="note" style="margin-top:8px">Ví dụ hộ nhóm 2 doanh thu 1,5 tỷ/năm, tính theo tỷ lệ: GTGT ${fmt(vat)}đ, TNCN ${fmt(pit)}đ, cộng ${fmt(vat+pit)}đ/năm.</p></div>
+  <div><h3>3. Lưu ý khi kê khai</h3><ul>${g.tax.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+  <div><h3>4. Nghĩa vụ theo nhóm doanh thu</h3><ul>
+   <li><b>Đến 1 tỷ:</b> không nộp GTGT, TNCN; ghi sổ S1a-HKD, thông báo doanh thu năm.</li>
+   <li><b>1 – 3 tỷ:</b> hóa đơn điện tử bắt buộc, khai theo quý, chọn tính TNCN theo tỷ lệ hoặc 15% trên thu nhập.</li>
+   <li><b>3 – 50 tỷ:</b> TNCN 17% trên thu nhập, sổ S2b–S2e, S3a-HKD, khai theo quý.</li>
+   <li><b>Trên 50 tỷ:</b> TNCN 20% trên thu nhập, khai theo tháng.</li></ul></div>
+  <div><h3>5. Phần mềm phù hợp</h3><p style="margin-top:6px">${g.sw}. AZ tư vấn chọn gói và cài đặt, hướng dẫn sử dụng.</p></div>
+  <p class="note">Bài viết mang tính tham khảo theo quy định năm 2026. Điều kiện kinh doanh có thể khác theo địa phương và quy mô.</p>
+  <div class="row" style="justify-content:space-between">${prev?`<a href="#hd-${prev.s}">← ${prev.n}</a>`:"<span></span>"}${next?`<a href="#hd-${next.s}">${next.n} →</a>`:""}</div>
+ </article>
+ <aside class="aside"><div class="card" style="display:grid;gap:10px"><h3>Cần AZ làm giúp?</h3><p class="muted">Kê khai thuế, ghi sổ, cài phần mềm cho hộ ${g.n.toLowerCase()}.</p>
+  <a class="btn" href="#lien-he" data-ind="${g.r}" data-note="${esc(g.n)}">Đăng ký tư vấn</a><a class="btn ghost" href="#tinh-thue" data-ind="${g.r}">Tính thuế ngành này</a>
+  <div class="contact-box"><span class="phone num">0901 455 988</span></div></div></aside></div>`}
+document.addEventListener("click",e=>{const a=e.target.closest("[data-ind]");if(!a)return;$("#cIndustry").value=a.dataset.ind;$("#lIndustry").value=a.dataset.ind;calc();
+ if(a.dataset.note&&!$("#lNote").value)$("#lNote").value="Hộ kinh doanh "+a.dataset.note.toLowerCase()+": ";});
+
+/* docs checklist (per-viewer) */
+const docBoxes=[...document.querySelectorAll('#v-bang-gia .check input')];
+try{const s=JSON.parse(localStorage.getItem("azdocs")||"[]");docBoxes.forEach(b=>b.checked=s.includes(b.id))}catch(e){}
+function docCount(){$("#docsCount").textContent=`Đã có ${docBoxes.filter(b=>b.checked).length}/${docBoxes.length} giấy tờ.`;try{localStorage.setItem("azdocs",JSON.stringify(docBoxes.filter(b=>b.checked).map(b=>b.id)))}catch(e){}}
+docBoxes.forEach(b=>b.addEventListener("change",docCount));docCount();
+
+/* leads: db */
+let dbP=null,userP=null;
+function getDb(){return dbP||(dbP=(window.claude?.use?window.claude.use("db"):Promise.resolve(null)).catch(()=>null))}
+function getUser(){return userP||(userP=(window.claude?.use?window.claude.use("user"):Promise.resolve(null)).catch(()=>null))}
+function leadText(d){return `Chào AZ, tôi cần tư vấn kế toán hộ kinh doanh.\nHọ tên: ${d.name}\nSĐT/Zalo: ${d.phone}\nNgành: ${d.industryName}\nDoanh thu: ${d.revenue}\nDịch vụ cần làm: ${d.plan}\nPhần mềm MISA: ${d.software}\nNội dung: ${d.note||"-"}`}
+$("#leadForm").addEventListener("submit",async e=>{e.preventDefault();
+ const name=$("#lName").value.trim(),phone=$("#lPhone").value.trim();const err=$("#lErr");
+ if(!name||phone.replace(/\D/g,"").length<9){err.textContent="Nhập họ tên và số điện thoại (ít nhất 9 chữ số).";err.hidden=false;return}
+ err.hidden=true;const btn=$("#lSubmit");btn.disabled=true;btn.textContent="Đang gửi…";
+ const ind=$("#lIndustry").value;const d={name,phone,industry:ind,industryName:RATES.find(r=>r.id===ind).name,revenue:$("#lRevenue").value,plan:$("#lPlan").value,software:$("#lSoft").value,note:$("#lNote").value.trim().slice(0,1000),status:"Mới",createdAt:new Date().toISOString()};
+ let saved=false;
+ try{const [db,user]=await Promise.all([getDb(),getUser()]);
+  if(db&&user){const id=await user.id();if(id){await db.doc("leads/"+id).set(d);saved=true}}}catch(x){saved=false}
+ btn.disabled=false;btn.textContent="Gửi yêu cầu tư vấn";
+ $("#leadMsg").value=leadText(d);$("#leadDone").hidden=false;
+ if(saved){$("#leadDoneTitle").textContent="Đã nhận yêu cầu";$("#leadDoneText").textContent="AZ sẽ gọi lại cho bạn trong ngày làm việc. Muốn nhanh hơn, chép nội dung dưới đây gửi Zalo 0901 455 988."}
+ else{$("#leadDoneTitle").textContent="Gửi qua Zalo để hoàn tất";$("#leadDoneText").textContent="Trang này chưa lưu được yêu cầu từ trình duyệt của bạn. Chép nội dung dưới đây và gửi Zalo 0901 455 988, AZ sẽ phản hồi ngay."}
+ $("#leadDone").scrollIntoView({behavior:"smooth",block:"nearest"})});
+$("#copyMsg").onclick=()=>copy($("#leadMsg").value);
+
+/* admin */
+let adminUnsub=null;
+(async()=>{const user=await getUser();if(user&&user.canEdit&&user.canEdit()){$("#adminLink").hidden=false;if(location.hash==="#quan-tri")loadAdmin()}})();
+const STATUSES=["Mới","Đã gọi","Đang báo giá","Đã ký","Không phù hợp"];
+async function loadAdmin(){if(adminUnsub)return;const body=$("#leadBody");
+ const [db,user]=await Promise.all([getDb(),getUser()]);
+ if(!db||!user||!user.canEdit()){body.innerHTML=`<tr><td colspan="5" class="muted">Chỉ chủ website xem được mục này.</td></tr>`;return}
+ const timer=setTimeout(()=>{body.innerHTML=`<tr><td colspan="5" class="muted">Chưa tải được dữ liệu. Kiểm tra kết nối rồi mở lại trang.</td></tr>`},10000);
+ adminUnsub=db.collection("leads").orderBy("createdAt","desc").onSnapshot(snap=>{clearTimeout(timer);
+  const rows=snap.docs.map(d=>({id:d.id,...d.data()}));const cnt=s=>rows.filter(r=>r.status===s).length;
+  $("#adminStats").innerHTML=`<span class="tag alert num">${cnt("Mới")} mới</span><span class="tag warn num">${cnt("Đang báo giá")} báo giá</span><span class="tag num">${cnt("Đã ký")} đã ký</span>`;
+  if(!rows.length){body.innerHTML=`<tr><td colspan="5" class="muted">Chưa có yêu cầu nào. Khi khách gửi form Đăng ký tư vấn, yêu cầu sẽ hiện ở đây.</td></tr>`;return}
+  body.innerHTML="";rows.forEach(r=>{const tr=document.createElement("tr");const dt=new Date(r.createdAt);
+   const c=(t,cls)=>{const td=document.createElement("td");if(cls)td.className=cls;td.textContent=t;return td};
+   tr.append(c(isNaN(dt)?"":dt.toLocaleDateString("vi-VN"),"num"));
+   const who=document.createElement("td");const b=document.createElement("b");b.textContent=r.name||"";const p=document.createElement("div");p.className="num";p.textContent=r.phone||"";who.append(b,p);tr.append(who);
+   tr.append(c((r.industryName||"")+" · "+(r.revenue||"")));
+   const need=[r.plan&&r.plan!=="Chưa chọn"?r.plan:"",r.software&&r.software!=="Chưa cần"?r.software:""].filter(Boolean).join(" + ");
+   tr.append(c((need?"["+need+"] ":"")+(r.note||""),"muted"));
+   const st=document.createElement("td");const sel=document.createElement("select");sel.className="status-sel";
+   STATUSES.forEach(s=>{const o=document.createElement("option");o.textContent=s;if(s===r.status)o.selected=true;sel.append(o)});
+   sel.onchange=async()=>{try{await db.doc("leads/"+r.id).update({status:sel.value});toast("Đã cập nhật")}catch(e){toast("Không cập nhật được")}};
+   st.append(sel);tr.append(st);body.append(tr)})},
+  e=>{clearTimeout(timer);body.innerHTML=`<tr><td colspan="5" class="muted">Không đọc được dữ liệu yêu cầu.</td></tr>`})}
+
+route();
+</script>
+
+</body>
+</html>
