@@ -10,6 +10,7 @@ Website giới thiệu dịch vụ kế toán, kê khai thuế cho hộ kinh doa
 | Tên | Dịch vụ kế toán nhanh AZ (logo: "Kế toán nhanh AZ") |
 | Điện thoại / Zalo | 0901 455 988 (`tel:0901455988`, `https://zalo.me/0901455988`) |
 | Email | ketoannhanhaz@gmail.com |
+| Địa chỉ | 231-233 Lê Thánh Tôn, Phường Bến Thành, Thành phố Hồ Chí Minh, Việt Nam |
 | Website | dichvuketoanhokinhdoanh.com |
 
 Khi đổi thông tin liên hệ: sửa cả `docs/index.html` (header, liên hệ, footer, JSON-LD) và hằng số `PHONE`, `EMAIL` trong `docs/js/main.js`.

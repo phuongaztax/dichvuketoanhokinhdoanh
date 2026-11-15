@@ -374,7 +374,8 @@ body {
 .contact__info h2 + p { margin-top: 14px; }
 .contact__list { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 2px; }
 .contact__list li { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
-.contact__list span { color: var(--muted); }
+.contact__list span { color: var(--muted); flex: none; }
+.contact__list li > :last-child { text-align: right; }
 .contact__list a { text-decoration: none; }
 .form { padding: 28px; display: grid; gap: 16px; }
 .form__msg { font-size: .92rem; min-height: 1.4em; }
@@ -447,5 +448,6 @@ body {
   .calc__form, .form { padding: 20px; }
   .footer__grid { grid-template-columns: 1fr; gap: 28px; }
   .contact__list li { flex-direction: column; gap: 0; }
+  .contact__list li > :last-child { text-align: left; }
   .table th, .table td { padding: 12px 14px; }
 }
